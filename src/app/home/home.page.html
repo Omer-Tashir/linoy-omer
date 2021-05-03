@@ -1,25 +1,121 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Inbox
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="content ion-text-center ion-padding">  
 
-<ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  <ng-container *ngIf="homeTpl">
+
+    <div class="content" @homeItem>
+
+      <ion-img src="assets/linoy-omer.jpeg" class="content__image ion-margin-vertical"></ion-img>
   
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">
-        Inbox
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <p class="content__text-line" @scaleIn>
+        <ion-text color="tertiary" class="content__text-line--fs-20">לינוי & עומר</ion-text>
+      </p>
+    
+      <p class="content__text-line" @scaleIn>
+        <ion-text color="secondary" class="content__text-line--fs-16">מתחתנים</ion-text>
+      </p>
+    
+      <p class="content__text-line content__text-line--margin" @scaleIn>
+        <ion-text class="content__text-line">{{weddingDateStr}}</ion-text>
+      </p>
+    
+      <p class="content__text-line content__text-line" @scaleIn>
+        <ion-text class="content__text-line--fs-10">אנו שמחים ונרגשים להזמין אתכם לחגוג עימנו את יום נישואינו, שיערך ביום שני, כ׳ בסיוון תשפ״א</ion-text>
+      </p>
+    
+      <p class="content__text-line content__text-line--margin" @scaleIn>
+        <ion-text class="content__text-line--fs-16">31.05.2021</ion-text>
+      </p>
+    
+      <ion-grid>
+        <ion-row @listAnimation>
+          <ion-col @items>
+            <div class="ion-text-center">
+              <h3>19:30</h3>
+              קבלת פנים
+            </div>
+          </ion-col>
+          <ion-col @items>
+            <div class="ion-text-center">
+              <h3>״נסיה״</h3>
+              צומת ראם
+            </div>
+          </ion-col>
+          <ion-col @items>
+            <div class="ion-text-center">
+              <h3>20:30</h3>
+              חופה וקידושין
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    
+      <ion-grid [formGroup]="form" novalidate>
+        <ion-row>
+          <ion-col>
+            <ion-list @listAnimation>
+              <ion-radio-group formControlName="isComming">
+                <ion-list-header class="ion-text-center ion-no-padding" @items>
+                  <ion-label class="content__text-line--fs-12">מתכוונים להגיע?</ion-label>
+                </ion-list-header>
+            
+                <ion-item color="success" @items>
+                  <ion-label>כמובן!!!</ion-label>
+                  <ion-radio slot="start" value="Y"></ion-radio>
+                </ion-item>
+            
+                <ion-item color="danger" @items>
+                  <ion-label>לא, תודה</ion-label>
+                  <ion-radio slot="start" value="N"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="ion-margin-top">
+          <ion-col>
+            <ion-item @scaleIn class="ion-no-padding">
+              <ion-label position="stacked">שם מלא</ion-label>
+              <ion-input formControlName="fullname"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="ion-margin-top">
+          <ion-col>
+            <ion-item @scaleIn class="ion-no-padding">
+              <ion-label position="stacked">כמה מגיעים?</ion-label>
+              <ion-input type="number" formControlName="participants"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="ion-margin-top ion-padding-top">
+          <ion-col>
+            <ion-button class="content__text-line--fs-12" color="tertiary" expand="block" (click)="submit()" [disabled]="form.invalid" @scaleIn>שלח</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="!homeTpl">
+
+    <div class="content content__flex-center" @homeItem>
+      <p class="content__text-line">
+        <ion-text color="tertiary" class="content__text-line--fs-20">תודה רבה על תשובתכם :)</ion-text>
+      </p>
+
+      <p class="content__text-line">
+        <ion-text color="secondary" class="content__text-line--fs-16">מצפים לראותכם!</ion-text>
+      </p>
+    </div>
+
+  </ng-container>
   
-  <ion-list>
-    <app-message *ngFor="let message of getMessages()" [message]="message"></app-message>
-  </ion-list>
 </ion-content>
+
+<ion-footer class="footer ion-text-center ion-padding">
+  Powered by <ion-text color="tertiary"><a href="https://www.facebook.com/OmerTashir" target="_blank" class="footer__link">Omer Tashir</a></ion-text>
+</ion-footer>
