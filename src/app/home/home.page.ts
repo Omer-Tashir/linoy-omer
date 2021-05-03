@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
@@ -6,6 +6,8 @@ import { LoadingController } from '@ionic/angular';
 import { DataService, RSVP } from '../services/data.service';
 
 import * as moment from 'moment/moment';
+import { Subscription } from 'rxjs';
+import { debounce, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -44,9 +46,11 @@ import * as moment from 'moment/moment';
     ])
   ],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
 
   form: FormGroup;
+
+  formSub: Subscription;
 
   weddingDateStr: string;
 
@@ -83,11 +87,23 @@ export class HomePage implements OnInit {
     this.homeTpl = !this.isReturningUser();
     this.weddingDateStr = moment("20210531", "YYYYMMDD").fromNow();
     
+    const formHistory = localStorage.getItem('form') ? JSON.parse(localStorage.getItem('form')) : undefined;
+
     this.form = this.fb.group({
-      isComming: new FormControl('Y', [Validators.required]),
-      fullname: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      participants: new FormControl('', [Validators.nullValidator]),
+      isComming: new FormControl(formHistory?.isComming ?? 'Y', [Validators.required]),
+      fullname: new FormControl(formHistory?.fullname ?? '', [Validators.required, Validators.minLength(2)]),
+      participants: new FormControl(formHistory?.participants ?? '', [Validators.nullValidator]),
     });
+
+    this.formSub = this.form.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(value => localStorage.setItem('form', JSON.stringify(value))),
+    ).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.formSub.unsubscribe();
   }
 
   get isComing() {
@@ -106,11 +122,12 @@ export class HomePage implements OnInit {
     let rsvp: RSVP = {
       fullname: this.fullname.value,
       isComing: this.isComing.value,
-      participants: this.isComing.value === 'Y' ? this.participants.value : 0 
+      participants: this.isComing.value !== 'N' ? this.participants.value : 0 
     }
 
     this.presentLoading().then(() => {
-      this.data.putRSVP(rsvp).subscribe(() => {
+      this.data.putRSVP(rsvp).subscribe((uid) => {
+        localStorage.setItem('uid', uid);
         localStorage.setItem('returningUser', 'true');
         this.homeTpl = false;
         setTimeout(() => {
@@ -118,6 +135,11 @@ export class HomePage implements OnInit {
         }, 1000);
       });
     });
+  }
+
+  reset() {
+    localStorage.removeItem('returningUser');
+    window.location.reload();
   }
 
   isReturningUser() {

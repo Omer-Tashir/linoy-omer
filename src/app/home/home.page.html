@@ -57,12 +57,17 @@
                 </ion-list-header>
             
                 <ion-item color="success" @items>
-                  <ion-label>כמובן!!!</ion-label>
+                  <ion-label color="primary">כמובן!!!</ion-label>
                   <ion-radio slot="start" value="Y"></ion-radio>
+                </ion-item>
+
+                <ion-item color="warning" @items>
+                  <ion-label color="primary">עדיין מתלבטים</ion-label>
+                  <ion-radio slot="start" value="M"></ion-radio>
                 </ion-item>
             
                 <ion-item color="danger" @items>
-                  <ion-label>לא נגיע, תודה</ion-label>
+                  <ion-label color="primary">לא נגיע</ion-label>
                   <ion-radio slot="start" value="N"></ion-radio>
                 </ion-item>
               </ion-radio-group>
@@ -79,7 +84,7 @@
           </ion-col>
         </ion-row>
     
-        <ion-row class="ion-margin-top" *ngIf="isComing.value === 'Y'">
+        <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
           <ion-col>
             <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">כמה מגיעים?</ion-label>
@@ -108,6 +113,12 @@
       <p class="content__text-line">
         <ion-text color="secondary" class="content__text-line--fs-16 ion-text-center ion-no-padding">מצפים לראותכם!</ion-text>
       </p>
+
+      <ion-row class="ion-margin-top ion-padding-top">
+        <ion-col>
+          <ion-button class="ion-margin" color="tertiary" expand="block" (click)="reset()">רוצה לשנות תשובה?</ion-button>
+        </ion-col>
+      </ion-row>
     </div>
 
   </ng-container>
