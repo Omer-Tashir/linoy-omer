@@ -74,16 +74,16 @@
           <ion-col>
             <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">שם מלא</ion-label>
-              <ion-input formControlName="fullname" autocomplete="name" autocorrect="off" clearInput="true" debounce="100" inputmode="text" required="true" spellcheck="false"></ion-input>
+              <ion-input formControlName="fullname" autocomplete="name" autocorrect="off" clearInput="true" debounce="100" inputmode="text" spellcheck="false"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
     
-        <ion-row class="ion-margin-top">
+        <ion-row class="ion-margin-top" *ngIf="isComing.value === 'Y'">
           <ion-col>
             <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">כמה מגיעים?</ion-label>
-              <ion-input type="number" formControlName="participants" pattern="[0-9]*" min="0" max="15" step="1" inputmode="numeric" required="true"></ion-input>
+              <ion-input type="number" formControlName="participants" pattern="[0-9]*" min="0" max="15" step="1" inputmode="numeric"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

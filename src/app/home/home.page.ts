@@ -82,11 +82,11 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.homeTpl = !this.isReturningUser();
     this.weddingDateStr = moment("20210531", "YYYYMMDD").fromNow();
-
+    
     this.form = this.fb.group({
       isComming: new FormControl('Y', [Validators.required]),
       fullname: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      participants: new FormControl('', [Validators.required, Validators.minLength(0), Validators.maxLength(15), Validators.pattern("[0-9]*")]),
+      participants: new FormControl('', [Validators.nullValidator]),
     });
   }
 
