@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
+import { CountDownComponent } from '../core/count-down/count-down.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { HomePageRoutingModule } from './home-routing.module';
     HomePageRoutingModule
   ],
   declarations: [
-    HomePage
+    HomePage,
+    CountDownComponent
   ]
 })
 export class HomePageModule {}

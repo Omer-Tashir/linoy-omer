@@ -1,8 +1,7 @@
-import { Component, HostBinding, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
 
 import { DataService, RSVP } from '../services/data.service';
 
@@ -45,11 +44,9 @@ import * as moment from 'moment/moment';
     ])
   ],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage implements OnInit {
 
   form: FormGroup;
-
-  formSub: Subscription;
 
   weddingDateStr: string;
 
@@ -88,17 +85,8 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.form = this.fb.group({
       isComming: new FormControl('Y', [Validators.required]),
-      fullname: new FormControl('', [Validators.required]),
-      participants: new FormControl(1, [Validators.required]),
-    });
-
-    this.formSub = this.form.valueChanges.subscribe(() => {
-      if(this.isComing.value === 'Y') {
-        this.participants.setValidators(Validators.required);
-      }
-      else {
-        this.participants.setValidators(Validators.nullValidator);
-      }
+      fullname: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      participants: new FormControl(1, [Validators.required, Validators.minLength(0), Validators.maxLength(15), Validators.pattern("[0-9]*")]),
     });
   }
 
@@ -134,9 +122,5 @@ export class HomePage implements OnInit, OnDestroy {
 
   isReturningUser() {
     return !!localStorage.getItem('returningUser'); 
-  }
-
-  ngOnDestroy(): void {
-    this.formSub.unsubscribe();
   }
 }

@@ -14,9 +14,7 @@
         <ion-text color="secondary" class="content__text-line--fs-16">מתחתנים</ion-text>
       </p>
     
-      <p class="content__text-line content__text-line--margin" @scaleIn>
-        <ion-text class="content__text-line">{{weddingDateStr}}</ion-text>
-      </p>
+      <app-count-down class="content__text-line content__text-line--margin" @scaleIn></app-count-down>
     
       <p class="content__text-line content__text-line" @scaleIn>
         <ion-text class="content__text-line--fs-10">אנו שמחים ונרגשים להזמין אתכם לחגוג עימנו את יום נישואינו, שיערך ביום שני, כ׳ בסיוון תשפ״א</ion-text>
@@ -64,7 +62,7 @@
                 </ion-item>
             
                 <ion-item color="danger" @items>
-                  <ion-label>לא, תודה</ion-label>
+                  <ion-label>לא נגיע, תודה</ion-label>
                   <ion-radio slot="start" value="N"></ion-radio>
                 </ion-item>
               </ion-radio-group>
@@ -76,7 +74,7 @@
           <ion-col>
             <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">שם מלא</ion-label>
-              <ion-input formControlName="fullname"></ion-input>
+              <ion-input formControlName="fullname" autocomplete="name" autocorrect="off" clearInput="true" debounce="100" inputmode="text" required="true" spellcheck="false"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -85,7 +83,7 @@
           <ion-col>
             <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">כמה מגיעים?</ion-label>
-              <ion-input type="number" formControlName="participants"></ion-input>
+              <ion-input type="number" formControlName="participants" pattern="[0-9]*" min="0" max="15" step="1" inputmode="numeric" required="true"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -102,13 +100,13 @@
 
   <ng-container *ngIf="!homeTpl">
 
-    <div class="content content__flex-center" @homeItem>
+    <div class="content content__flex-center ion-no-padding" @homeItem>
       <p class="content__text-line">
-        <ion-text color="tertiary" class="content__text-line--fs-20">תודה רבה על תשובתכם :)</ion-text>
+        <ion-text color="tertiary" class="content__text-line--fs-20 ion-text-center ion-no-padding">תודה רבה על תשובתכם :)</ion-text>
       </p>
 
       <p class="content__text-line">
-        <ion-text color="secondary" class="content__text-line--fs-16">מצפים לראותכם!</ion-text>
+        <ion-text color="secondary" class="content__text-line--fs-16 ion-text-center ion-no-padding">מצפים לראותכם!</ion-text>
       </p>
     </div>
 
