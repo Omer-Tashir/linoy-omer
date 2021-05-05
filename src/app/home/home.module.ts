@@ -6,7 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
+
 import { CountDownComponent } from '../core/count-down/count-down.component';
+import { GoogleWazeNavigationComponent } from '../core/google-waze-navigation/google-waze-navigation.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import { CountDownComponent } from '../core/count-down/count-down.component';
   ],
   declarations: [
     HomePage,
-    CountDownComponent
+    CountDownComponent,
+    GoogleWazeNavigationComponent
   ]
 })
 export class HomePageModule {}

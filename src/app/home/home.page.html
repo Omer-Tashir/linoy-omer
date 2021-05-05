@@ -52,7 +52,7 @@
           <ion-col>
             <ion-list @listAnimation>
               <ion-radio-group formControlName="isComming">
-                <ion-list-header class="ion-text-center ion-no-padding" @items>
+                <ion-list-header class="ion-text-center" @items>
                   <ion-label class="content__text-line--fs-12">מתכוונים להגיע?</ion-label>
                 </ion-list-header>
             
@@ -77,7 +77,7 @@
     
         <ion-row class="ion-margin-top">
           <ion-col>
-            <ion-item @scaleIn class="ion-no-padding">
+            <ion-item @scaleIn>
               <ion-label position="stacked">שם מלא</ion-label>
               <ion-input formControlName="fullname" autocomplete="name" autocorrect="off" clearInput="true" debounce="100" inputmode="text" spellcheck="false"></ion-input>
             </ion-item>
@@ -86,7 +86,7 @@
     
         <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
           <ion-col>
-            <ion-item @scaleIn class="ion-no-padding">
+            <ion-item @scaleIn>
               <ion-label position="stacked">כמה מגיעים?</ion-label>
               <ion-input type="number" formControlName="participants" pattern="[0-9]*" min="0" max="15" step="1" inputmode="numeric"></ion-input>
             </ion-item>
@@ -105,18 +105,47 @@
 
   <ng-container *ngIf="!homeTpl">
 
-    <div class="content content__flex-center ion-no-padding" @homeItem>
-      <p class="content__text-line">
-        <ion-text color="tertiary" class="content__text-line--fs-20 ion-text-center ion-no-padding">תודה רבה על תשובתכם :)</ion-text>
-      </p>
+    <div class="content content__flex-center" @homeItem>
 
       <p class="content__text-line">
-        <ion-text color="secondary" class="content__text-line--fs-16 ion-text-center ion-no-padding">מצפים לראותכם!</ion-text>
+        <ion-text color="tertiary" class="content__text-line--fs-20 ion-text-center ion-padding">תודה רבה על תשובתכם</ion-text>
       </p>
+
+      <ng-container *ngIf="isComing.value === 'Y'">
+  
+        <p class="content__text-line">
+          <ion-text color="secondary" class="content__text-line--fs-16 ion-text-center ion-padding">מצפים לראותכם <span class="emoji">🤩🤩🤩</span></ion-text>
+        </p>
+
+        <app-google-waze-navigation></app-google-waze-navigation>
+
+      </ng-container>
+
+      <ng-container *ngIf="isComing.value === 'M'">
+  
+        <p class="content__text-line">
+          <ion-text color="secondary" class="content__text-line--fs-16 ion-text-center ion-padding">מחזיקים אצבעות שכן תוכלו להגיע <span class="emoji">🙏🙏🙏</span></ion-text>
+        </p>
+
+      </ng-container>
+
+      <ng-container *ngIf="isComing.value === 'N'">
+  
+        <p class="content__text-line">
+          <ion-text color="secondary" class="content__text-line--fs-16 ion-text-center ion-padding">נשמח לראות אתכם באירועים הבאים</ion-text>
+        </p>
+
+      </ng-container>
 
       <ion-row class="ion-margin-top ion-padding-top">
         <ion-col>
-          <ion-button class="ion-margin" color="tertiary" expand="block" (click)="reset()">רוצה לשנות תשובה?</ion-button>
+
+          <p class="ion-margin">
+            אתם <span [ngClass]="{'comming' : isComing.value === 'Y', 'not-comming' : isComing.value === 'N', 'maybe-comming' : isComing.value === 'M'}">{{isComing.value === 'N' ? 'לא מגיעים' : isComing.value === 'Y' ? 'מגיעים' : 'אולי מגיעים'}}</span> לחתונה
+          </p>
+
+          <ion-button class="ion-margin" color="tertiary" expand="block" (click)="reset()">רוצים לשנות תשובה?</ion-button>
+
         </ion-col>
       </ion-row>
     </div>

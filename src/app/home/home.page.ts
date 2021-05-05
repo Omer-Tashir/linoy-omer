@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 
 import { DataService, RSVP } from '../services/data.service';
@@ -92,7 +92,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.form = this.fb.group({
       isComming: new FormControl(formHistory?.isComming ?? 'Y', [Validators.required]),
       fullname: new FormControl(formHistory?.fullname ?? '', [Validators.required, Validators.minLength(2)]),
-      participants: new FormControl(formHistory?.participants ?? '', [Validators.nullValidator]),
+      participants: new FormControl(formHistory?.participants ?? 1, [Validators.required]),
     });
 
     this.formSub = this.form.valueChanges.pipe(
@@ -106,23 +106,23 @@ export class HomePage implements OnInit, OnDestroy {
     this.formSub.unsubscribe();
   }
 
-  get isComing() {
+  get isComing(): AbstractControl {
     return this.form.controls['isComming'];
   }
 
-  get fullname() {
+  get fullname(): AbstractControl {
     return this.form.controls['fullname'];
   }
 
-  get participants() {
+  get participants(): AbstractControl {
     return this.form.controls['participants'];
   }
 
-  submit() {
+  submit(): void {
     let rsvp: RSVP = {
       fullname: this.fullname.value,
       isComing: this.isComing.value,
-      participants: this.isComing.value !== 'N' ? this.participants.value : 0 
+      participants: this.isComing.value === 'N' ? 0 : this.participants.value
     }
 
     this.presentLoading().then(() => {
@@ -137,12 +137,12 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
-  reset() {
+  reset(): void {
     localStorage.removeItem('returningUser');
     window.location.reload();
   }
 
-  isReturningUser() {
+  isReturningUser(): boolean {
     return !!localStorage.getItem('returningUser'); 
   }
 }

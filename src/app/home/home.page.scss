@@ -68,3 +68,22 @@ ion-item {
         }
     }
 }
+
+.comming,
+.not-comming,
+.maybe-comming {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.comming {
+    color: var(--ion-color-success);
+}
+
+.not-comming {
+    color: var(--ion-color-danger);
+}
+
+.maybe-comming {
+    color: var(--ion-color-warning);
+}
