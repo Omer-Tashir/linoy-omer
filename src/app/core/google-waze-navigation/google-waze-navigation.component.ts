@@ -27,7 +27,7 @@ export class GoogleWazeNavigationComponent {
       text: 'Waze',
       icon: 'assets/waze.svg',
       handler: () => {
-        window.open("https://waze.com/ul?ll=נסיה אולם אירועים צומת ראם&navigate=yes&z=10");
+        window.open("https://waze.com/ul?q=נסיה אולם אירועים צומת ראם&navigate=yes");
       }
     });
 
