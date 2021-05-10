@@ -25,8 +25,11 @@
     "@ionic/angular": "^5.5.2",
     "angular-animations": "^0.11.0",
     "canvas-confetti": "^1.4.0",
+    "chart.js": "^2.9.4",
+    "chartjs-plugin-labels": "^1.1.0",
     "firebase": "^8.4.3",
     "moment": "^2.29.1",
+    "ng2-charts": "^2.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

@@ -27,7 +27,7 @@ export class GoogleWazeNavigationComponent {
       text: 'Waze',
       icon: 'assets/waze.svg',
       handler: () => {
-        window.open("https://waze.com/ul?q=נסיה אולם אירועים צומת ראם&navigate=yes");
+        window.open("waze://?place=ChIJ9UcMHOHWAhUR1Eq0tAzSh9U&ll=31.76099620%2C34.78668640&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location");
       }
     });
 

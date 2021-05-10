@@ -1,5 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { ConfettiService } from './services/confetti.service';
+import { Component } from '@angular/core';
 
 import * as moment from 'moment/moment';
 
@@ -8,17 +7,9 @@ import * as moment from 'moment/moment';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
 
-  constructor(
-    private confettiService: ConfettiService
-  ) {
+  constructor() {
     moment.locale("he");
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.confettiService.startCelebration();
-    }, 1000);
   }
 }

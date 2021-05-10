@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
-export interface RSVP {
+import { catchError, map, shareReplay } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+
+export class RSVP {
   fullname: string;
+  isComing: string;
   participants?: number;
-  isComing: boolean;
+  transportation?: boolean;
+  transportationPoint?: string;
 }
 
 @Injectable({
@@ -15,13 +18,19 @@ export interface RSVP {
 export class DataService {
   constructor(private db: AngularFirestore) {}
 
+  getRSVP(): Observable<RSVP[]> {
+    return this.db.collection(`RSVP`).get().pipe(
+      map(rsvp => rsvp.docs.map(doc => {
+        return Object.assign(new RSVP(), doc.data());
+      })),
+      catchError(err => of([])),
+      shareReplay()
+    );
+  }
+
   putRSVP(rsvp: RSVP): Observable<string> {
     const uid = localStorage.getItem('uid') ?? this.db.createId();
-    return from(this.db.collection(`RSVP`).doc(uid).set({
-      fullname: rsvp?.fullname,
-      participants: rsvp?.participants,
-      isComing: rsvp?.isComing
-    })).pipe(
+    return from(this.db.collection(`RSVP`).doc(uid).set({...rsvp})).pipe(
       map(() => uid)
     );
   }

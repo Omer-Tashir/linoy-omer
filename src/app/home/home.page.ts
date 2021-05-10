@@ -1,13 +1,14 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { LoadingController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 import { DataService, RSVP } from '../services/data.service';
+import { ConfettiService } from '../services/confetti.service';
 
 import * as moment from 'moment/moment';
-import { Subscription } from 'rxjs';
-import { debounce, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +47,7 @@ import { debounce, debounceTime, distinctUntilChanged, tap } from 'rxjs/operator
     ])
   ],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   form: FormGroup;
 
@@ -65,6 +66,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(
     private data: DataService,
+    private confettiService: ConfettiService,
     public loadingController: LoadingController,
     public fb: FormBuilder
   ) {}
@@ -73,7 +75,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.isLoading = true;
     const loading = await this.loadingController.create({
       cssClass: 'loading',
-      message: 'תודה רבה, שולחים את תשובתך ללינוי ועומר',
+      message: 'תודה רבה, אנו מעדכנים את תשובתכם במערכת',
     });
     await loading.present();
   }
@@ -93,6 +95,8 @@ export class HomePage implements OnInit, OnDestroy {
       isComming: new FormControl(formHistory?.isComming ?? 'Y', [Validators.required]),
       fullname: new FormControl(formHistory?.fullname ?? '', [Validators.required, Validators.minLength(2)]),
       participants: new FormControl(formHistory?.participants ?? 1, [Validators.required]),
+      transportation: new FormControl(formHistory?.transportation ?? false, [Validators.required]),
+      transportationPoint: new FormControl(formHistory?.transportationPoint ?? 'תל אביב', [Validators.required]),
     });
 
     this.formSub = this.form.valueChanges.pipe(
@@ -100,6 +104,12 @@ export class HomePage implements OnInit, OnDestroy {
       distinctUntilChanged(),
       tap(value => localStorage.setItem('form', JSON.stringify(value))),
     ).subscribe();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.confettiService.startCelebration();
+    }, 1000);
   }
 
   ngOnDestroy(): void {
@@ -118,11 +128,27 @@ export class HomePage implements OnInit, OnDestroy {
     return this.form.controls['participants'];
   }
 
+  get transportation(): AbstractControl {
+    return this.form.controls['transportation'];
+  }
+
+  get transportationPoint(): AbstractControl {
+    return this.form.controls['transportationPoint'];
+  }
+
   submit(): void {
     let rsvp: RSVP = {
       fullname: this.fullname.value,
-      isComing: this.isComing.value,
-      participants: this.isComing.value === 'N' ? 0 : this.participants.value
+      isComing: this.isComing.value
+    }
+
+    if (this.isComing.value !== 'N') {
+      rsvp.participants = this.participants.value;
+      rsvp.transportation = this.transportation.value;
+
+      if (!!this.transportation.value) {
+        rsvp.transportationPoint = this.transportationPoint.value;
+      }
     }
 
     this.presentLoading().then(() => {

@@ -24,7 +24,7 @@
         <ion-text class="content__text-line--fs-16">31.05.2021</ion-text>
       </p>
     
-      <ion-grid>
+      <ion-grid class="ion-margin-bottom">
         <ion-row @listAnimation>
           <ion-col @items>
             <div class="ion-text-center">
@@ -46,30 +46,37 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+
+      <p class="content__text-line content__warning-message ion-padding" @scaleIn>
+        <ion-text color="danger" class="content__text-line--fs-8">הכניסה לאולם תתאפשר אך ורק בהצגת תו ירוק / תעודת מחלים בלבד או בדיקת קורונה שלילית בתוקף 48 שעות לפני האירוע.</ion-text>
+      </p>
     
       <ion-grid [formGroup]="form" novalidate>
         <ion-row>
           <ion-col>
             <ion-list @listAnimation>
               <ion-radio-group formControlName="isComming">
-                <ion-list-header class="ion-text-center" @items>
+                <ion-list-header class="ion-text-center ion-no-padding" @items>
                   <ion-label class="content__text-line--fs-12">מתכוונים להגיע?</ion-label>
                 </ion-list-header>
             
-                <ion-item color="success" @items>
-                  <ion-label color="primary">כמובן!!!</ion-label>
-                  <ion-radio slot="start" value="Y"></ion-radio>
-                </ion-item>
+                <div class="content__radio-group-items">
+                  <ion-item class="content__radio-group-item" color="success" @items>
+                    <ion-label color="light">כמובן!!!</ion-label>
+                    <ion-radio color="light" slot="start" value="Y"></ion-radio>
+                  </ion-item>
+  
+                  <ion-item class="content__radio-group-item" color="warning" @items>
+                    <ion-label color="light">עדיין מתלבטים</ion-label>
+                    <ion-radio color="light" slot="start" value="M"></ion-radio>
+                  </ion-item>
+              
+                  <ion-item class="content__radio-group-item" color="danger" @items>
+                    <ion-label color="light">לא נגיע</ion-label>
+                    <ion-radio color="light" slot="start" value="N"></ion-radio>
+                  </ion-item>
+                </div>
 
-                <ion-item color="warning" @items>
-                  <ion-label color="primary">עדיין מתלבטים</ion-label>
-                  <ion-radio slot="start" value="M"></ion-radio>
-                </ion-item>
-            
-                <ion-item color="danger" @items>
-                  <ion-label color="primary">לא נגיע</ion-label>
-                  <ion-radio slot="start" value="N"></ion-radio>
-                </ion-item>
               </ion-radio-group>
             </ion-list>
           </ion-col>
@@ -87,8 +94,42 @@
         <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
           <ion-col>
             <ion-item @scaleIn>
-              <ion-label position="stacked">כמה מגיעים?</ion-label>
+              <ion-label position="stacked">כמה אנשים תהיו?</ion-label>
               <ion-input type="number" formControlName="participants" pattern="[0-9]*" min="0" max="15" step="1" inputmode="numeric"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
+          <ion-col>
+            <p class="ion-padding ion-text-right" @scaleIn>
+              <ion-text class="content__text-line--fs-10">לנוחיותכם יש הסעות הלוך וחזור. ההסעות יעברו בין הערים: תל אביב, חולון וראשל״צ.</ion-text>
+            </p>
+            <p class="ion-padding-bottom ion-padding-horizontal ion-text-right" @scaleIn>
+              <ion-text class="content__text-line--fs-8">תל אביב - הלוך - יציאה ב-18:00</ion-text>
+              <br>
+              <ion-text class="content__text-line--fs-8">חולון - הלוך - יציאה ב-18:30</ion-text>
+              <br>
+              <ion-text class="content__text-line--fs-8">ראשל״צ - הלוך - יציאה ב-19:00</ion-text>
+              <br>
+              <ion-text class="content__text-line--fs-8">חזור - יציאה ב-00:30</ion-text>
+            </p>
+            <ion-item @scaleIn>
+              <ion-label>מעוניינים בהסעה?</ion-label>
+              <ion-checkbox formControlName="transportation" color="primary"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N' && !!transportation.value">
+          <ion-col>
+            <ion-item @scaleIn>
+              <ion-label position="stacked">נקודת איסוף</ion-label>
+              <ion-select formControlName="transportationPoint" okText="אישור" cancelText="סגור" placeholder="בחרו נקודת איסוף">
+                <ion-select-option value="תל אביב">תל אביב</ion-select-option>
+                <ion-select-option value="חולון">חולון</ion-select-option>
+                <ion-select-option value="ראשל״צ">ראשל״צ</ion-select-option>
+              </ion-select>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -155,5 +196,5 @@
 </ion-content>
 
 <ion-footer class="footer ion-text-center ion-padding">
-  Powered by <ion-text color="tertiary"><a href="https://www.facebook.com/OmerTashir" target="_blank" class="footer__link">Omer Tashir</a></ion-text>
+  Powered by <ion-text color="tertiary"><a href="https://www.linkedin.com/in/omer-tashir" target="_blank" class="footer__link">Omer Tashir</a></ion-text>
 </ion-footer>

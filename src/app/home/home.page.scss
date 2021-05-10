@@ -33,6 +33,11 @@ ion-img {
             font-size: 1rem;
             font-weight: normal;
         }
+
+        &--fs-8 {
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
     }
 
     &__flex-center {
@@ -42,6 +47,20 @@ ion-img {
         transform: translate(-50%, -50%);
         text-align: center;
         width: 100%;
+    }
+
+    &__radio-group-items {
+        display: grid;
+        gap: 7px;
+    }
+
+    &__radio-group-item {
+        border-radius: 10px;
+    }
+
+    &__warning-message {
+        border: 1px solid var(--ion-color-danger);
+        border-radius: 10px;
     }
 }
 
