@@ -48,7 +48,7 @@
       </ion-grid>
 
       <p class="content__text-line content__warning-message ion-padding" @scaleIn>
-        <ion-text color="danger" class="content__text-line--fs-8">הכניסה לאולם תתאפשר אך ורק בהצגת תו ירוק / תעודת מחלים בלבד או בדיקת קורונה שלילית בתוקף 48 שעות לפני האירוע.</ion-text>
+        <ion-text color="danger" class="content__text-line--fs-8 ion-padding">הכניסה לאולם תתאפשר אך ורק בהצגת תו ירוק / תעודת מחלים בלבד או בדיקת קורונה שלילית בתוקף 48 שעות לפני האירוע.</ion-text>
       </p>
     
       <ion-grid [formGroup]="form" novalidate>
@@ -84,7 +84,7 @@
     
         <ion-row class="ion-margin-top">
           <ion-col>
-            <ion-item @scaleIn>
+            <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">שם מלא</ion-label>
               <ion-input formControlName="fullname" autocomplete="name" autocorrect="off" clearInput="true" debounce="100" inputmode="text" spellcheck="false"></ion-input>
             </ion-item>
@@ -93,7 +93,7 @@
     
         <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
           <ion-col>
-            <ion-item @scaleIn>
+            <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">כמה אנשים תהיו?</ion-label>
               <ion-input type="number" formControlName="participants" pattern="[0-9]*" min="0" max="15" step="1" inputmode="numeric"></ion-input>
             </ion-item>
@@ -102,10 +102,10 @@
 
         <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
           <ion-col>
-            <p class="ion-padding ion-text-right" @scaleIn>
+            <p class="ion-text-right" @scaleIn>
               <ion-text class="content__text-line--fs-10">לנוחיותכם יש הסעות הלוך וחזור. ההסעות יעברו בין הערים: תל אביב, חולון וראשל״צ.</ion-text>
             </p>
-            <p class="ion-padding-bottom ion-padding-horizontal ion-text-right" @scaleIn>
+            <p class="ion-text-right" @scaleIn>
               <ion-text class="content__text-line--fs-8">תל אביב - הלוך - יציאה ב-18:00</ion-text>
               <br>
               <ion-text class="content__text-line--fs-8">חולון - הלוך - יציאה ב-18:30</ion-text>
@@ -114,7 +114,7 @@
               <br>
               <ion-text class="content__text-line--fs-8">חזור - יציאה ב-00:30</ion-text>
             </p>
-            <ion-item @scaleIn>
+            <ion-item @scaleIn class="ion-no-padding">
               <ion-label>מעוניינים בהסעה?</ion-label>
               <ion-checkbox formControlName="transportation" color="primary"></ion-checkbox>
             </ion-item>
@@ -123,7 +123,7 @@
 
         <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N' && !!transportation.value">
           <ion-col>
-            <ion-item @scaleIn>
+            <ion-item @scaleIn class="ion-no-padding">
               <ion-label position="stacked">נקודת איסוף</ion-label>
               <ion-select formControlName="transportationPoint" okText="אישור" cancelText="סגור" placeholder="בחרו נקודת איסוף">
                 <ion-select-option value="תל אביב">תל אביב</ion-select-option>

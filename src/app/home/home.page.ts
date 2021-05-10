@@ -42,7 +42,7 @@ import * as moment from 'moment/moment';
     ]), 
     trigger('listAnimation', [
       transition(':enter', [
-        query('@items', stagger(100, animateChild()))
+        query('@items', stagger(100, animateChild()), {optional: true})
       ])
     ])
   ],

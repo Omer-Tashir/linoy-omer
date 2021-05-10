@@ -54,13 +54,8 @@ ion-img {
         gap: 7px;
     }
 
-    &__radio-group-item {
-        border-radius: 10px;
-    }
-
     &__warning-message {
         border: 1px solid var(--ion-color-danger);
-        border-radius: 10px;
     }
 }
 

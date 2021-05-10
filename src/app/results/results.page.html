@@ -12,6 +12,27 @@
     [options]="pieChartOptions"
     [plugins]="pieChartPlugins"
     [colors]="pieChartColors"
-    [legend]="pieChartLegend">
+    [legend]="pieChartLegend"
+    (chartClick)="chartClicked($event)">
   </canvas>
+
+  <p class="results__title ion-padding-horizontal" @scaleIn>
+    <ion-text>{{activeLabel}} ({{activeCounter}})</ion-text>
+  </p>
+
+  <ion-grid class="ion-padding" @listAnimation>
+    <ion-row class="results__item" *ngFor="let item of activeList" @items>
+      <ion-col class="results__text results__text--fs-8">
+        {{item.name}}
+      </ion-col>
+      <ion-col class="results__text results__text--fs-8 results__text--bold">
+        ({{item.participants}})
+      </ion-col>
+      <ion-col class="results__text results__text--fs-8">
+        <ng-container *ngIf="!!item.transportation && !!item.transportationPoint">
+          מעוניינים בהסעה: {{item.transportationPoint}}
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
