@@ -16,17 +16,19 @@
     (chartClick)="chartClicked($event)">
   </canvas>
 
-  <p class="results__title ion-padding-horizontal" @scaleIn>
+  <p class="results__title ion-padding-horizontal ion-margin-vertical" @scaleIn>
     <ion-text>{{activeLabel}} ({{activeCounter}})</ion-text>
   </p>
 
-  <ion-grid class="ion-padding" @listAnimation>
+  <ion-grid class="ion-padding ion-margin-vertical" @listAnimation>
     <ion-row class="results__item" *ngFor="let item of activeList" @items>
       <ion-col class="results__text results__text--fs-8">
         {{item.name}}
       </ion-col>
       <ion-col class="results__text results__text--fs-8 results__text--bold">
-        ({{item.participants}})
+        <ng-container *ngIf="item.isComming !== 'N'">
+          ({{item.participants}})
+        </ng-container>
       </ion-col>
       <ion-col class="results__text results__text--fs-8">
         <ng-container *ngIf="!!item.transportation && !!item.transportationPoint">

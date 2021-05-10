@@ -103,19 +103,37 @@ export class ResultsPage implements OnInit {
 
         const notComming = rsvp.filter(r=>r.isComing==='N');
         this.notCommingCounter = notComming.length;
-        this.notComming = notComming.map(i => ({name: i.fullname, participants: i.participants, transportation: i.transportation, transportationPoint: i.transportationPoint}));
+        this.notComming = notComming.map(i => ({
+          name: i.fullname,
+          isComming: i.isComing,
+          participants: i.participants, 
+          transportation: i.transportation, 
+          transportationPoint: i.transportationPoint
+        }));
 
         const maybeComming = rsvp.filter(r=>r.isComing==='M');
         this.maybeCommingCounter = maybeComming.reduce((acc, val) => {
           return acc + val.participants;
         }, 0);
-        this.maybeComming = maybeComming.map(i => ({name: i.fullname, participants: i.participants, transportation: i.transportation, transportationPoint: i.transportationPoint}));
+        this.maybeComming = maybeComming.map(i => ({
+          name: i.fullname,
+          isComming: i.isComing,
+          participants: i.participants, 
+          transportation: i.transportation, 
+          transportationPoint: i.transportationPoint
+        }));
 
         const comming = rsvp.filter(r=>r.isComing==='Y');
         this.commingCounter = comming.reduce((acc, val) => {
           return acc + val.participants;
         }, 0);
-        this.comming = comming.map(i => ({name: i.fullname, participants: i.participants, transportation: i.transportation, transportationPoint: i.transportationPoint}));
+        this.comming = comming.map(i => ({
+          name: i.fullname,
+          isComming: i.isComing,
+          participants: i.participants, 
+          transportation: i.transportation, 
+          transportationPoint: i.transportationPoint
+        }));
 
         this.activeLabel = 'מגיעים';
         this.activeList = this.comming;
