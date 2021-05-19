@@ -10,10 +10,6 @@ ion-img {
         margin: 0;
         font-size: 1.4rem;
 
-        &--margin {
-            margin: 1rem 0;
-        }
-
         &--fs-20 {
             font-size: 2rem;
             font-weight: bold;
@@ -38,6 +34,14 @@ ion-img {
             font-size: 0.8rem;
             font-weight: normal;
         }
+
+        &--margin {
+            margin: 1rem 0;
+        }
+
+        &--bold {
+            font-weight: bold;
+        }
     }
 
     &__flex-center {
@@ -52,6 +56,11 @@ ion-img {
     &__radio-group-items {
         display: grid;
         gap: 7px;
+    }
+
+    &__radio-group-items-flex {
+        display: flex;
+        justify-content: flex-start;
     }
 
     &__warning-message {

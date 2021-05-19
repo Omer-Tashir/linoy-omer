@@ -102,22 +102,43 @@
 
         <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N'">
           <ion-col>
+            <ion-list lines="none" @listAnimation>
+              <ion-radio-group formControlName="transportation">
+                <ion-list-header class="ion-text-right ion-no-padding" @items>
+                  <ion-label class="content__text-line--fs-10 content__text-line--bold">מעוניינים בהסעה?</ion-label>
+                </ion-list-header>
+            
+                <div class="content__radio-group-items-flex">
+                  <ion-item lines="none" class="content__radio-group-item" @items>
+                    <ion-label>כן</ion-label>
+                    <ion-radio slot="start" [value]="true"></ion-radio>
+                  </ion-item>
+  
+                  <ion-item lines="none" class="content__radio-group-item" @items>
+                    <ion-label>לא</ion-label>
+                    <ion-radio slot="start" [value]="false"></ion-radio>
+                  </ion-item>
+                </div>
+
+              </ion-radio-group>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin-top" *ngIf="isComing.value !== 'N' && !!transportation.value">
+          <ion-col>
             <p class="ion-text-right" @scaleIn>
               <ion-text class="content__text-line--fs-10">לנוחיותכם יש הסעות הלוך וחזור. ההסעות יעברו בין הערים: תל אביב, חולון וראשל״צ.</ion-text>
             </p>
             <p class="ion-text-right" @scaleIn>
-              <ion-text class="content__text-line--fs-8">תל אביב - הלוך - יציאה ב-18:00</ion-text>
+              <ion-text class="content__text-line--fs-8">תל אביב - הלוך - יציאה ב-18:30</ion-text>
               <br>
-              <ion-text class="content__text-line--fs-8">חולון - הלוך - יציאה ב-18:30</ion-text>
+              <ion-text class="content__text-line--fs-8">חולון - הלוך - יציאה ב-19:00</ion-text>
               <br>
-              <ion-text class="content__text-line--fs-8">ראשל״צ - הלוך - יציאה ב-19:00</ion-text>
+              <ion-text class="content__text-line--fs-8">ראשל״צ - הלוך - יציאה ב-19:30</ion-text>
               <br>
               <ion-text class="content__text-line--fs-8">חזור - יציאה ב-00:30</ion-text>
             </p>
-            <ion-item @scaleIn class="ion-no-padding">
-              <ion-label>מעוניינים בהסעה?</ion-label>
-              <ion-checkbox formControlName="transportation" color="primary"></ion-checkbox>
-            </ion-item>
           </ion-col>
         </ion-row>
 
